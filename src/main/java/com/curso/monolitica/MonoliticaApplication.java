@@ -1,8 +1,12 @@
 package com.curso.monolitica;
 
+import com.curso.monolitica.domain.human.Person;
+import com.curso.monolitica.repository.human.PersonRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
@@ -12,14 +16,17 @@ import java.net.UnknownHostException;
 import java.util.Optional;
 
 @SpringBootApplication
-public class MonoliticaApplication {
+public class MonoliticaApplication implements ApplicationRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(MonoliticaApplication.class);
 
 	private final Environment env;
 
-	public MonoliticaApplication(Environment env) {
+	private final PersonRepository personRepository;
+
+	public MonoliticaApplication(Environment env, PersonRepository personRepository) {
 		this.env = env;
+		this.personRepository = personRepository;
 	}
 
 	public static void main(String[] args) {
@@ -61,5 +68,19 @@ public class MonoliticaApplication {
 				contextPath,
 				env.getActiveProfiles()
 		);
+	}
+
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		Person person = new Person();
+		person.setName("Andres");
+		person.setLastName("Merida");
+
+		Person person2 = new Person();
+		person2.setName("Reynaldo");
+		person2.setLastName("Aguilar");
+
+		personRepository.save(person);
+		personRepository.save(person2);
 	}
 }
