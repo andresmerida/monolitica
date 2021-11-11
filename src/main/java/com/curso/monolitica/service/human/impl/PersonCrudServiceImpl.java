@@ -6,6 +6,7 @@ import com.curso.monolitica.service.human.PersonCrudService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonCrudServiceImpl implements PersonCrudService {
@@ -19,5 +20,20 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     @Override
     public List<Person> getAllPersons() {
         return (List<Person>) personRepository.findAll();
+    }
+
+    @Override
+    public Optional<Person> getPersonById(Integer id) {
+        return personRepository.findById(id);
+    }
+
+    @Override
+    public Person savePerson(Person person) {
+        return personRepository.save(person);
+    }
+
+    @Override
+    public void deletePerson(Integer id) {
+        personRepository.deleteById(id);
     }
 }
