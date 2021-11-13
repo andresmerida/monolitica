@@ -1,6 +1,8 @@
 package com.curso.monolitica;
 
+import com.curso.monolitica.domain.config.Country;
 import com.curso.monolitica.domain.human.Person;
+import com.curso.monolitica.repository.config.CountryRepository;
 import com.curso.monolitica.repository.human.PersonRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -23,10 +25,12 @@ public class MonoliticaApplication implements ApplicationRunner {
 	private final Environment env;
 
 	private final PersonRepository personRepository;
+	private final CountryRepository countryRepository;
 
-	public MonoliticaApplication(Environment env, PersonRepository personRepository) {
+	public MonoliticaApplication(Environment env, PersonRepository personRepository, CountryRepository countryRepository) {
 		this.env = env;
 		this.personRepository = personRepository;
+		this.countryRepository = countryRepository;
 	}
 
 	public static void main(String[] args) {
@@ -82,5 +86,11 @@ public class MonoliticaApplication implements ApplicationRunner {
 
 		personRepository.save(person);
 		personRepository.save(person2);
+
+		Country country = new Country();
+		country.setName("Peru");
+		country.setInitials("PER");
+
+		countryRepository.save(country);
 	}
 }
