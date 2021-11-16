@@ -35,11 +35,12 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public CountryDTO save(CountryDTO countryDTO) {
-        return null;
+        Country country = this.countryMapper.toEntity(countryDTO);
+        return countryMapper.toDto(countryRepository.save(country));
     }
 
     @Override
     public void delete(Integer id) {
-
+        countryRepository.deleteById(id);
     }
 }
